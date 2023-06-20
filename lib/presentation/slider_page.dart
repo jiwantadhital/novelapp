@@ -27,7 +27,7 @@ class _SliderPartState extends State<SliderPart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      height: 290,
       width: widget.size.width,
       child: Column(
         children: [
@@ -35,13 +35,69 @@ class _SliderPartState extends State<SliderPart> {
             itemCount: images.length,
            itemBuilder: (context,index,pageIndex){
             return Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: NetworkImage(
-                    images[index]
-                    ),fit: BoxFit.cover),
+              height: 500,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    height: 180,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          images[index]
+                          ),fit: BoxFit.cover),
+                    ),
+                  ),
+                  Positioned(
+                    top: 105,
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      height: 100,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 2,
+                            blurRadius: 3
+                          )
+                        ]
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:  [
+                          Text("War Time",style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17
+                          ),),
+                          SizedBox(height: 5,),
+                          Text("Last Updated at 1334",style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14
+                          ),),
+                          SizedBox(height: 5,),
+                          Container(
+                            height: 33,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconsandText(icon: Icons.star,name: "4.5",),
+                                IconsandText(icon: Icons.chat,name: "13 COmments",),
+                                IconsandText(icon: Icons.favorite,name: "23",),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             );
            }, options: CarouselOptions(
@@ -51,7 +107,7 @@ class _SliderPartState extends State<SliderPart> {
                 
               });
             },
-            height: 180,
+            height: 210,
             aspectRatio: 16/9,
             enlargeCenterPage: true,
             viewportFraction: 0.8,
@@ -67,6 +123,23 @@ class _SliderPartState extends State<SliderPart> {
            )
         ],
       )
+    );
+  }
+}
+
+class IconsandText extends StatelessWidget {
+IconData icon;
+String name;
+IconsandText({required this.icon,required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon,color: Colors.green,),
+        SizedBox(width: 3,),
+        Text(name)
+      ],
     );
   }
 }
