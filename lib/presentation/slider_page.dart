@@ -27,7 +27,7 @@ class _SliderPartState extends State<SliderPart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 290,
+      height: 260,
       width: widget.size.width,
       child: Column(
         children: [
