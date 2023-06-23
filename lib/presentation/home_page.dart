@@ -1,8 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:novelapp/presentation/popular_items.dart';
 import 'package:novelapp/presentation/slider_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -83,61 +81,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class PopularItems extends StatelessWidget {
-  const PopularItems({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context,index){
-        return Container(
-          margin: EdgeInsets.all(10),
-          height: 190,
-          width: 170,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 5,
-                offset: Offset(-2, 2)
-              )
-            ]
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: 140,
-                width: 170,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)
-                  ),
-                  image: DecorationImage(image: NetworkImage("https://media.istockphoto.com/id/637696304/photo/patan.jpg?s=612x612&w=0&k=20&c=-53aSTGBGoOOqX5aoC3Hs1jhZ527v3Id_xOawHHVPpg="),
-                  fit: BoxFit.cover
-                  )
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text("War Time",style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600
-              ),)
-            ],
-          ),
-        );
-      }),
-    );
-  }
-}
 
 class ItemsTopic extends StatelessWidget {
   final Size size;
