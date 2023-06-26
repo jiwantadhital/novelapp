@@ -14,17 +14,8 @@ class PopularDetails extends StatefulWidget {
 class _PopularDetailsState extends State<PopularDetails> {
 String value = "";
 
-
-savedData()async{
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
- value = prefs.getString('manish').toString();
-setState(() {
-  
-});
-}
 @override
   void initState() {
-   savedData();
     super.initState();
   }
 

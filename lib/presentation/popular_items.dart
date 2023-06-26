@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:novelapp/detail_page/popular_details.dart';
+import 'package:novelapp/shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PopularItems extends StatefulWidget {
@@ -12,19 +13,23 @@ class PopularItems extends StatefulWidget {
 }
 
 class _PopularItemsState extends State<PopularItems> {
-  String value = "";
-  savedData()async{
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
- value = prefs.getString('manish').toString();
-setState(() {
-  
-});
+String name = "";
+
+savedData()async{
+  final SharedPreferences shared = await SharedPreferences.getInstance();
+  name = shared.getString("Name")??"Name";
+  setState(() {
+    
+  });
 }
-  @override
+
+
+@override
   void initState() {
     savedData();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,11 +39,10 @@ setState(() {
         itemBuilder: (context,index){
         return GestureDetector(
           onTap: ()async{
-            final SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setString('manish', index.toString());
             Navigator.push(context, MaterialPageRoute(builder: (context){
-              return PopularDetails();
+              return Shared();
             }));
+          
           },
           child: Container(
             margin: EdgeInsets.all(10),
@@ -72,7 +76,7 @@ setState(() {
                   ),
                 ),
                 SizedBox(height: 10,),
-                Text(value,style: TextStyle(
+                Text(name,style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600
                 ),)
