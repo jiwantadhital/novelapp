@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:novelapp/presentation/home_page.dart';
+import 'package:novelapp/side_page/api_practice.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,6 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return ApiPractice();
   }
 }
