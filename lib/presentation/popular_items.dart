@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:novelapp/controller/popular_controller.dart';
 import 'package:novelapp/detail_page/popular_details.dart';
+import 'package:novelapp/model/popular_model.dart';
 import 'package:novelapp/shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,36 +15,25 @@ class PopularItems extends StatefulWidget {
 }
 
 class _PopularItemsState extends State<PopularItems> {
-String name = "";
-
-savedData()async{
-  final SharedPreferences shared = await SharedPreferences.getInstance();
-  name = shared.getString("Name")??"Name";
-  setState(() {
-    
-  });
-}
-
-
-@override
-  void initState() {
-    savedData();
-    super.initState();
-  }
+PopularController popularController = PopularController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      child: ListView.builder(
+      child:FutureBuilder<List<PopularModel>>(
+        future: popularController.getPopularItem(),
+        builder: (context,snapshot){
+         if(snapshot.hasData){
+          return  ListView.builder(
+            itemCount: snapshot.data!.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context,index){
         return GestureDetector(
           onTap: ()async{
             Navigator.push(context, MaterialPageRoute(builder: (context){
-              return Shared();
+              return PopularDetail(popularData: snapshot.data![index],);
             }));
-          
           },
           child: Container(
             margin: EdgeInsets.all(10),
@@ -70,13 +61,13 @@ savedData()async{
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)
                     ),
-                    image: DecorationImage(image: NetworkImage("https://media.istockphoto.com/id/637696304/photo/patan.jpg?s=612x612&w=0&k=20&c=-53aSTGBGoOOqX5aoC3Hs1jhZ527v3Id_xOawHHVPpg="),
+                    image: DecorationImage(image: NetworkImage(snapshot.data![index].image.toString()),
                     fit: BoxFit.cover
                     )
                   ),
                 ),
                 SizedBox(height: 10,),
-                Text(name,style: TextStyle(
+                Text(snapshot.data![index].title.toString(),style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600
                 ),)
@@ -84,6 +75,9 @@ savedData()async{
             ),
           ),
         );
+      });
+         }
+         return Center(child: CircularProgressIndicator());
       }),
     );
   }

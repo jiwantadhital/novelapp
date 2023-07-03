@@ -32,7 +32,7 @@ Future<List<AlbumList>> getData()async{
         future: getData(),
         builder: (context,snapshot){
         return ListView.builder(
-        itemCount: snapshot.data!.length,
+        itemCount:snapshot.hasData? snapshot.data!.length:0,
         itemBuilder: (context,index){
           if(snapshot.hasData){
             return Container(
