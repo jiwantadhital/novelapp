@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:novelapp/controller/comment_post_controller.dart';
 
 class PopularDetail extends StatefulWidget {
 var popularData;
@@ -12,6 +13,9 @@ PopularDetail({required this.popularData});
 }
 
 class _PopularDetailState extends State<PopularDetail> {
+var commentController = TextEditingController();
+int value = 0;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -43,9 +47,92 @@ class _PopularDetailState extends State<PopularDetail> {
               ),
               child: Column(
                 children: [
-                  CustomText(name: widget.popularData.title,size: 20,weight: FontWeight.w600,color: Colors.black,),
-                  SizedBox(height: 15,),
-                  CustomText(name: widget.popularData.description, color: Colors.black, size: 15, weight: FontWeight.w400)
+                  Container(
+                    height: 50,
+                    width: size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            if(value==0){
+
+                            }
+                            else{
+                              value=0;
+                             
+                            }
+                             setState(() {
+                                
+                              });
+
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            height: 50,
+                            width: size.width*0.45,
+                            decoration: BoxDecoration(
+                              color:value==0?Colors.blue: Colors.green,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Center(child: CustomText(name: "Description", color: Colors.white, size: 19, weight: FontWeight.w600)),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            if(value==0){
+                              value=1;
+
+                            }
+                            else{
+
+                            }
+                            setState(() {
+                              
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            height: 50,
+                            width: size.width*0.45,
+                            decoration: BoxDecoration(
+                              color:value==0? Colors.green:Colors.blue,
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Center(child: CustomText(name: "Comments", color: Colors.white, size: 19, weight: FontWeight.w600)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                 value==0? Description( widget: widget):
+                Container(
+                  padding: EdgeInsets.all(10),
+                  height: 200,
+                  width: size.width,
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: commentController,
+                        maxLines: 4,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          hintText: "Comments",
+                          border: OutlineInputBorder()
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        onPressed: ()async{
+                          CommentController().postComment(comment: commentController.text);
+                          commentController.clear();
+                      }, child: Text("Submit"))
+                    ],
+                  ),
+                  
+                ),
+
                 ],
               ),
             ))
@@ -53,6 +140,28 @@ class _PopularDetailState extends State<PopularDetail> {
         ),
       ),
     );
+  }
+}
+
+
+//description
+class Description extends StatelessWidget {
+  const Description({
+    super.key,
+    required this.widget,
+  });
+
+  final PopularDetail widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+       children: [
+         CustomText(name: widget.popularData.title,size: 20,weight: FontWeight.w600,color: Colors.black,),
+     SizedBox(height: 15,),
+     CustomText(name: widget.popularData.description, color: Colors.black, size: 15, weight: FontWeight.w400)
+       ],
+     );
   }
 }
 

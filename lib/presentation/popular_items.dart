@@ -1,9 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:novelapp/controller/popular_controller.dart';
 import 'package:novelapp/detail_page/popular_details.dart';
 import 'package:novelapp/model/popular_model.dart';
-import 'package:novelapp/shared.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class PopularItems extends StatefulWidget {
   const PopularItems({
@@ -15,6 +15,8 @@ class PopularItems extends StatefulWidget {
 }
 
 class _PopularItemsState extends State<PopularItems> {
+
+
 PopularController popularController = PopularController();
 
   @override
@@ -37,7 +39,7 @@ PopularController popularController = PopularController();
           },
           child: Container(
             margin: EdgeInsets.all(10),
-            height: 190,
+            height: 200,
             width: 170,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -54,7 +56,7 @@ PopularController popularController = PopularController();
             child: Column(
               children: [
                 Container(
-                  height: 140,
+                  height: 130,
                   width: 170,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
