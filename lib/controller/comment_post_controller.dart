@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:novelapp/model/comment_model.dart';
 
 class CommentController{
 
@@ -25,5 +26,21 @@ return false;
 }
 
 }
+
+//get comment
+Future<List<CommentsModel>> getComment()async{
+
+var response =await http.get(Uri.parse("http://10.0.2.2:8000/api/add/comments"));
+if(response.statusCode==200){
+return List<CommentsModel>.from(jsonDecode(response.body.toString()).map((e)=>CommentsModel.fromJson(e)));
+
+}
+else{
+  throw Exception("Error");
+}
+
+
+}
+
 
 }

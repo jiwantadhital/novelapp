@@ -13,6 +13,7 @@ PopularDetail({required this.popularData});
 }
 
 class _PopularDetailState extends State<PopularDetail> {
+  bool loading = false;
 var commentController = TextEditingController();
 int value = 0;
 
@@ -45,95 +46,132 @@ int value = 0;
                   topRight: Radius.circular(20)
                 )
               ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 50,
-                    width: size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            if(value==0){
-
-                            }
-                            else{
-                              value=0;
-                             
-                            }
-                             setState(() {
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 50,
+                      width: size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              if(value==0){
+              
+                              }
+                              else{
+                                value=0;
+                               
+                              }
+                               setState(() {
+                                  
+                                });
+              
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              height: 50,
+                              width: size.width*0.45,
+                              decoration: BoxDecoration(
+                                color:value==0?Colors.blue: Colors.green,
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Center(child: CustomText(name: "Description", color: Colors.white, size: 19, weight: FontWeight.w600)),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              if(value==0){
+                                value=1;
+              
+                              }
+                              else{
+              
+                              }
+                              setState(() {
                                 
                               });
-
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: 50,
-                            width: size.width*0.45,
-                            decoration: BoxDecoration(
-                              color:value==0?Colors.blue: Colors.green,
-                              borderRadius: BorderRadius.circular(10)
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              height: 50,
+                              width: size.width*0.45,
+                              decoration: BoxDecoration(
+                                color:value==0? Colors.green:Colors.blue,
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Center(child: CustomText(name: "Comments", color: Colors.white, size: 19, weight: FontWeight.w600)),
                             ),
-                            child: Center(child: CustomText(name: "Description", color: Colors.white, size: 19, weight: FontWeight.w600)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                   value==0? Description( widget: widget):
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    height: 200,
+                    width: size.width,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: commentController,
+                          maxLines: 4,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: "Comments",
+                            border: OutlineInputBorder()
                           ),
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            if(value==0){
-                              value=1;
-
-                            }
-                            else{
-
-                            }
+                        SizedBox(height: 10,),
+                       loading==false? ElevatedButton(
+                          onPressed: ()async{
+                           setState(() {
+                            loading=true;
                             setState(() {
                               
                             });
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: 50,
-                            width: size.width*0.45,
-                            decoration: BoxDecoration(
-                              color:value==0? Colors.green:Colors.blue,
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Center(child: CustomText(name: "Comments", color: Colors.white, size: 19, weight: FontWeight.w600)),
-                          ),
-                        ),
+                              CommentController().postComment(comment: commentController.text).then((value)  {
+                                loading=false;
+                                setState(() {
+                                 commentController.clear();
+                             });
+                              });
+              
+                           });
+              
+                        }, child: Text("Submit")):CircularProgressIndicator()
                       ],
-                    ),
+                    ),     
+              
                   ),
-                  SizedBox(height: 20,),
-                 value==0? Description( widget: widget):
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: 200,
-                  width: size.width,
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: commentController,
-                        maxLines: 4,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: "Comments",
-                          border: OutlineInputBorder()
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      ElevatedButton(
-                        onPressed: ()async{
-                          CommentController().postComment(comment: commentController.text);
-                          commentController.clear();
-                      }, child: Text("Submit"))
-                    ],
-                  ),
-                  
+                  SizedBox(height: 10,),
+                value==1?  FutureBuilder(
+                    future: CommentController().getComment(),
+                    builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context,index){
+                    return Container(
+                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                    padding: EdgeInsets.all(10),
+                    width: size.width,
+                   decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10)
+                   ),
+                   child: Text(snapshot.data![index].comments.toString()),
+                  );
+                  });
+                    }
+                    return CircularProgressIndicator.adaptive();
+                  }):Container()
+                  ],
                 ),
-
-                ],
               ),
             ))
           ],

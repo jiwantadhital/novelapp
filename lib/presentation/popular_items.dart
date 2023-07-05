@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:novelapp/controller/popular_controller.dart';
 import 'package:novelapp/detail_page/popular_details.dart';
@@ -15,7 +14,7 @@ class PopularItems extends StatefulWidget {
 }
 
 class _PopularItemsState extends State<PopularItems> {
-
+  
 
 PopularController popularController = PopularController();
 
