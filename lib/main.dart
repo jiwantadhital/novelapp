@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:novelapp/controller/popular_controller.dart';
 import 'package:novelapp/presentation/home_page.dart';
 import 'package:novelapp/side_page/api_practice.dart';
 
@@ -12,7 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+Get.lazyPut(()=>PopularController());
+
+    return GetBuilder<PopularController>(builder: (_){
+      return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -21,6 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Main(),
     );
+    });
   }
 }
 
