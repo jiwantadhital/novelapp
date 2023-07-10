@@ -27,14 +27,13 @@ class PopularController extends GetxController{
   List<PopularModel> popularItem= [];
 
 //getpopular api
-Future<List<PopularModel>> getPopularItem()async{
+Future<void> getPopularItem()async{
 var response =await http.get(Uri.parse("https://mocki.io/v1/e95a0e81-9fbe-477f-b952-7e96c3322400"));
 if(response.statusCode==200){
   popularItem.clear();
   update();
   popularItem.addAll(List<PopularModel>.from(jsonDecode(response.body.toString()).map((e)=>PopularModel.fromJson(e))));
   update();
-return List<PopularModel>.from(jsonDecode(response.body.toString()).map((e)=>PopularModel.fromJson(e)));
 }
 else{
   throw Exception("Error");

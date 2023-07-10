@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:novelapp/routes/router.dart';
+import 'package:novelapp/side_page/xtra.dart';
 
 class SliderPart extends StatefulWidget {
   const SliderPart({
@@ -67,33 +70,38 @@ class _SliderPartState extends State<SliderPart> {
                           )
                         ]
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  [
-                          Text("War Time",style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17
-                          ),),
-                          SizedBox(height: 5,),
-                          Text("Last Updated at 1334",style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14
-                          ),),
-                          SizedBox(height: 5,),
-                          Container(
-                            height: 33,
-                            width: MediaQuery.of(context).size.width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconsandText(icon: Icons.star,name: "4.5",),
-                                IconsandText(icon: Icons.chat,name: "13 COmments",),
-                                IconsandText(icon: Icons.favorite,name: "23",),
-                              ],
-                            ),
-                          )
-                        ],
+                      child: GestureDetector(
+                        onTap: (){
+                       Get.to(() => Extras());
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:  [
+                            Text("War Time",style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17
+                            ),),
+                            SizedBox(height: 5,),
+                            Text("Last Updated at 1334",style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14
+                            ),),
+                            SizedBox(height: 5,),
+                            Container(
+                              height: 33,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconsandText(icon: Icons.star,name: "4.5",),
+                                  IconsandText(icon: Icons.chat,name: "13 COmments",),
+                                  IconsandText(icon: Icons.favorite,name: "23",),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   )

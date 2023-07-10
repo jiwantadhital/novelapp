@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novelapp/bottom_navBar/bottom_nav.dart';
 import 'package:novelapp/controller/popular_controller.dart';
 import 'package:novelapp/presentation/home_page.dart';
+import 'package:novelapp/routes/router.dart';
 import 'package:novelapp/side_page/api_practice.dart';
 
 void main() {
@@ -19,13 +21,14 @@ Get.lazyPut(()=>PopularController());
 
     return GetBuilder<PopularController>(builder: (_){
       return GetMaterialApp(
+        onGenerateRoute: RouteNav.generateRoute,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
     
         primarySwatch: Colors.blue,
       ),
-      home: Main(),
+      home: BottomBarApp(),
     );
     });
   }
